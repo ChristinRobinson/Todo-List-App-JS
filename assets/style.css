@@ -1,0 +1,235 @@
+/* 
+================
+Global Variables
+================
+*/
+
+:root {
+  --primary-bg-color: grey;
+  --secondary-bg-color: lightgrey;
+  --primary-color: black;
+  --secondary-color: grey;
+  --active-color: lightseagreen;
+}
+
+/* 
+=============
+Global Styles
+=============
+*/
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type="text"] {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  outline: none;
+  padding: 0.5rem;
+  flex-grow: 1;
+}
+
+input[type="checkbox"] {
+  visibility: hidden;
+  position: absolute
+}
+
+ul {
+  list-style-type: none;
+  font-size: 1.5rem;
+}
+
+li {
+  border-radius: 0.3rem;
+  height: 2.25rem;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+li:hover {
+  background-color: #eee5;
+}
+
+/* 
+==============
+Global Classes
+==============
+*/
+
+#app {
+  background-color: var(--primary-bg-color);
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.container {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 15px grey;
+  max-width: 500px;
+  width: 100%;
+  padding: 1rem;
+}
+
+/* 
+=============
+Custom Styles
+=============
+*/
+
+/* Header */
+
+header {
+  border-bottom: 1px solid var(--secondary-bg-color);
+  padding-bottom: 0.5rem;
+}
+
+header .add-task {
+  background-color: var(--secondary-bg-color);
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header .add-task span {
+  cursor: pointer;
+  display: none;
+  align-items: center;
+}
+
+header .add-task:hover span,
+header .add-task input[type="text"]:focus~span {
+  display: flex;
+}
+
+header .add-task label {
+  display: flex;
+  align-items: center;
+}
+
+header .global-task-controls {
+  color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header .global-task-controls span {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+header .global-task-controls span:hover {
+  color: var(--active-color);
+}
+
+header .global-task-controls span i {
+  margin-right: 5px;
+}
+
+
+
+/* Main */
+
+main {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+main ul li.empty-message {
+  color: #ccc;
+  height: 120px;
+  justify-content: center;
+}
+
+main ul li label {
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+main ul li input[type="checkbox"].checked~label .custom-checkbox span {
+  background-color: var(--active-color);
+}
+
+main ul li input[type="checkbox"].checked~label .text {
+  text-decoration: line-through;
+}
+
+main ul li .custom-checkbox {
+  border: 2px solid black;
+  border-radius: 50%;
+  height: 1rem;
+  width: 1rem;
+  display: inline-block;
+  position: relative;
+}
+
+main ul li .custom-checkbox span {
+  border-radius: 50%;
+  height: .5rem;
+  width: .5rem;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+main ul li .delete-task-button {
+  cursor: pointer;
+  display: none;
+  align-items: center;
+}
+
+main ul li:hover .delete-task-button {
+  display: flex;
+}
+
+
+
+/* Footer */
+
+footer {
+  border-top: 1px solid var(--secondary-bg-color);
+  color: var(--secondary-color);
+  padding-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+footer span #count {
+  color: black;
+  font-weight: bold;
+}
+
+footer .task-filters span {
+  cursor: pointer;
+}
+
+footer .task-filters span:hover {
+  color: var(--active-color);
+}
+
+footer .task-filters span+span {
+  margin-left: 0.25rem;
+}
