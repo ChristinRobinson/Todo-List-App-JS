@@ -22,8 +22,6 @@ const getItems = () => {
 
 let tasks = getItems();
 
-// console.log(tasks);
-
 // Set a TODO item into localStorage
 const setItems = (items) => {
 	const itemsJSON = JSON.stringify(items);
@@ -85,28 +83,27 @@ const refreshList = () => {
 	countContainer.innerText = uncompletedTasks.length;
 
 	// Insert every TODO items into todo-list
-	showAll.addEventListener('click', (e) => {
-		e.target.style.color = 'var(--active-color)';
+	showAll.addEventListener('click', () => {
+		showAll.style.color = 'var(--active-color)';
 		showCompleted.style.color = 'var(--secondary-color)';
 		showUncompleted.style.color = 'var(--secondary-color)';
 		addTasksToDOM(tasks);
 	});
 
-	showCompleted.addEventListener('click', (e) => {
-		e.target.style.color = 'var(--active-color)';
+	showCompleted.addEventListener('click', () => {
 		showAll.style.color = 'var(--secondary-color)';
+		showCompleted.style.color = 'var(--active-color)';
 		showUncompleted.style.color = 'var(--secondary-color)';
 		addTasksToDOM(completedTasks);
 	});
 
-	showUncompleted.addEventListener('click', (e) => {
-		e.target.style.color = 'var(--active-color)';
+	showUncompleted.addEventListener('click', () => {
 		showAll.style.color = 'var(--secondary-color)';
 		showCompleted.style.color = 'var(--secondary-color)';
+		showUncompleted.style.color = 'var(--active-color)';
 		addTasksToDOM(uncompletedTasks);
 	});
 
-	showAll.style.color = 'var(--active-color)';
 	addTasksToDOM(tasks);
 };
 
@@ -116,11 +113,7 @@ refreshList();
 
 // Add TODO item
 const addTask = (task) => {
-	tasks.unshift({
-		id: Date.now().toString(),
-		isCompleted: false,
-		text: task.text,
-	});
+	tasks.unshift(task);
 
 	refreshList();
 };
@@ -203,7 +196,6 @@ const handleInput = (e) => {
 			const task = createObject(value);
 			addTask(task);
 		}
-
 		return;
 	}
 };
