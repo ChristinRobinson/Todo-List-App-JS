@@ -13,6 +13,13 @@ const taskInput = document.querySelector('#task-input');
 const todoListContainer = document.querySelector('#todo-list');
 const countContainer = document.querySelector('#count');
 
+// Set a TODO item into localStorage
+const setItems = (items) => {
+	const itemsJSON = JSON.stringify(items);
+
+	localStorage.setItem('todo-items', itemsJSON);
+};
+
 // Get TODO items from localStorage
 const getItems = () => {
 	const value = localStorage.getItem('todo-items') || '[]';
@@ -21,13 +28,6 @@ const getItems = () => {
 };
 
 let tasks = getItems();
-
-// Set a TODO item into localStorage
-const setItems = (items) => {
-	const itemsJSON = JSON.stringify(items);
-
-	localStorage.setItem('todo-items', itemsJSON);
-};
 
 // Add Task to DOM
 const addTasksToDOM = (tasks) => {
@@ -53,16 +53,19 @@ const addTasksToDOM = (tasks) => {
 
 	for (let i = 0; i < tasks.length; i++) {
 		const li = document.createElement('li');
+
 		li.innerHTML = `
 			<input type="checkbox" onchange="toggleTask('${tasks[i].id}')" 
 			id="${tasks[i].id}" class=${tasks[i].isCompleted ? 'checked' : ''}>
-      <label for="${tasks[i].id}">
+      
+			<label for="${tasks[i].id}">
         <span class="custom-checkbox"><span></span></span>
         <span class="text">${tasks[i].text}</span>
       </label>
-      <span class="delete-task-button" onclick="deleteTask('${
-				tasks[i].id
-			}')"><i class='bx bx-x-circle'></i></span>
+      
+			<span class="delete-task-button" onclick="deleteTask('${tasks[i].id}')">
+				<i class='bx bx-x-circle'></i>
+			</span>
 		`;
 
 		todoListContainer.append(li);
@@ -87,6 +90,7 @@ const refreshList = () => {
 		showAll.style.color = 'var(--active-color)';
 		showCompleted.style.color = 'var(--secondary-color)';
 		showUncompleted.style.color = 'var(--secondary-color)';
+
 		addTasksToDOM(tasks);
 	});
 
@@ -94,6 +98,7 @@ const refreshList = () => {
 		showAll.style.color = 'var(--secondary-color)';
 		showCompleted.style.color = 'var(--active-color)';
 		showUncompleted.style.color = 'var(--secondary-color)';
+
 		addTasksToDOM(completedTasks);
 	});
 
@@ -101,6 +106,7 @@ const refreshList = () => {
 		showAll.style.color = 'var(--secondary-color)';
 		showCompleted.style.color = 'var(--secondary-color)';
 		showUncompleted.style.color = 'var(--active-color)';
+
 		addTasksToDOM(uncompletedTasks);
 	});
 
@@ -143,17 +149,6 @@ const deleteTask = (taskId) => {
 	return;
 };
 
-// Create Object Template
-const createObject = (text) => {
-	const task = {
-		id: Date.now().toString(),
-		isCompleted: false,
-		text,
-	};
-
-	return task;
-};
-
 // Complete All Tasks
 completeAllTasksButton.addEventListener('click', () => {
 	tasks.forEach((task) => {
@@ -169,11 +164,22 @@ clearCompletedButton.addEventListener('click', () => {
 	const newTasks = tasks.filter((task) => {
 		return !task.isCompleted;
 	});
-
 	tasks = newTasks;
+
 	refreshList();
 	return;
 });
+
+// Create Object Template
+const createObject = (text) => {
+	const task = {
+		id: Date.now().toString(),
+		isCompleted: false,
+		text,
+	};
+
+	return task;
+};
 
 // Adding task with Click Event
 addTaskButton.addEventListener('click', () => {
