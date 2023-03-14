@@ -36,6 +36,10 @@ const addTasksToDOM = (tasks) => {
 	taskInput.value = '';
 	todoListContainer.innerHTML = '';
 
+	if (!tasks.length > 0) {
+		todoListContainer.innerHTML = '<li class="empty-message">Empty!</li>';
+	}
+
 	// Sort TODO items
 	tasks.sort((a, b) => {
 		if (a.isCompleted) {
@@ -73,51 +77,37 @@ const refreshList = () => {
 	let completedTasks = tasks.filter((task) => {
 		return task.isCompleted;
 	});
-	// console.log(completedTasks);
 
 	let uncompletedTasks = tasks.filter((task) => {
 		return !task.isCompleted;
 	});
-	// console.log(uncompletedTasks);
 
 	countContainer.innerText = uncompletedTasks.length;
 
-	if (tasks.length > 0) {
-		// Insert every TODO items into todo-list
-		const showList = [showAll, showCompleted, showUncompleted];
-
-		showList.forEach((show) => {
-			show.addEventListener('click', (e) => {
-				switch (e.target.id) {
-					case 'show-all':
-						addTasksToDOM(tasks);
-						break;
-					case 'show-completed':
-						if (completedTasks.length > 0) {
-							addTasksToDOM(completedTasks);
-						} else {
-							todoListContainer.innerHTML =
-								'<li class="empty-message">Empty!</li>';
-						}
-						break;
-					case 'show-uncompleted':
-						if (uncompletedTasks.length > 0) {
-							addTasksToDOM(uncompletedTasks);
-						} else {
-							todoListContainer.innerHTML =
-								'<li class="empty-message">Empty!</li>';
-						}
-						break;
-					default:
-						addTasksToDOM(tasks);
-				}
-			});
-		});
-
+	// Insert every TODO items into todo-list
+	showAll.addEventListener('click', (e) => {
+		e.target.style.color = 'var(--active-color)';
+		showCompleted.style.color = 'var(--secondary-color)';
+		showUncompleted.style.color = 'var(--secondary-color)';
 		addTasksToDOM(tasks);
-	} else {
-		todoListContainer.innerHTML = '<li class="empty-message">Empty!</li>';
-	}
+	});
+
+	showCompleted.addEventListener('click', (e) => {
+		e.target.style.color = 'var(--active-color)';
+		showAll.style.color = 'var(--secondary-color)';
+		showUncompleted.style.color = 'var(--secondary-color)';
+		addTasksToDOM(completedTasks);
+	});
+
+	showUncompleted.addEventListener('click', (e) => {
+		e.target.style.color = 'var(--active-color)';
+		showAll.style.color = 'var(--secondary-color)';
+		showCompleted.style.color = 'var(--secondary-color)';
+		addTasksToDOM(uncompletedTasks);
+	});
+
+	showAll.style.color = 'var(--active-color)';
+	addTasksToDOM(tasks);
 };
 
 refreshList();
